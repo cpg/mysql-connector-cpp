@@ -1,0 +1,15 @@
+VERSION=1.0
+RPMBUILDDIR=$(HOME)/rpmbuild
+
+dist:
+	(mkdir -p release && cd release && mkdir -p mysql-connector-c++-$(VERSION))
+	rsync -a --exclude=release * \
+		release/mysql-connector-c++-$(VERSION)/
+	(cd release && tar -czvf mysql-connector-c++-$(VERSION).tar.gz mysql-connector-c++-$(VERSION))
+	(cd release && rm -rf mysql-connector-c++-$(VERSION))	
+
+rpm: dist
+	sed -i -e 's/^Version:\s*[0-9.]*\s*$$/Version:	$(VERSION)/' *.spec
+	(cd release && rpmbuild -ta mysql-connector-c++-$(VERSION).tar.gz)
+	mv $(RPMBUILDDIR)/RPMS/*/mysql-connector-c++-$(VERSION)-*.rpm release/
+	mv $(RPMBUILDDIR)/SRPMS/mysql-connector-c++-$(VERSION)-*.src.rpm release/
