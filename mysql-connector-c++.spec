@@ -176,6 +176,8 @@ rm %{buildroot}/usr/{INFO_SRC,INFO_BIN}
 %files
 %doc README.txt LICENSE.txt INFO_SRC build-dynamic/INFO_BIN
 %{_libdir}/libmysqlcppconn8.so.*
+%{_libdir}/libmysqlcppconn8.so.2*
+
 
 %files devel
 %doc README.txt LICENSE.txt INFO_SRC build-dynamic/INFO_BIN
